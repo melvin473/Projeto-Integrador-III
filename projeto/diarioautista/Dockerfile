@@ -1,4 +1,6 @@
-# Imagem oficial do Python
+# Arquivo otimizado para uso no Google Cloud Run
+
+# Imagem do Python
 FROM python:3.11-slim
 
 # Variáveis de ambiente para otimização
@@ -17,13 +19,16 @@ WORKDIR /app
 # Copia arquivos de dependências e instala
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Cria o diretório para a biblioteca NLTK
 RUN mkdir -p /app/nltk_data
+# Faz o download dos arquivos adicionais da biblioteca NLTK
 RUN python -c "import nltk; [nltk.download(pkg, download_dir='/app/nltk_data') for pkg in ['punkt', 'punkt_tab', 'averaged_perceptron_tagger', 'vader_lexicon']]"
 
 # Copia o restante do código
 COPY . .
 
-# Corrige permissões do arquivo da chave privada (opcional)
+# Corrige permissões do arquivo da chave privada
 RUN chmod 600 /app/certificados/client-key.pem || true
 
 # Comando para rodar o servidor via Gunicorn
