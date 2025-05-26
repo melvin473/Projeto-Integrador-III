@@ -1,8 +1,10 @@
+# Importando as bibliotecas necessárias
 import nltk
 import random
 from datetime import datetime
 from . import frases
 
+# Garantindo que a biblioteca encontre os arquivos corretos
 nltk.data.path.append('/app/nltk_data')
 
 PALAVRAS_POSITIVAS = {"feliz", "alegre", "bom", "ótimo", "excelente", "maravilhoso", "gostei", "legal", "animado", "tranquilo", "satisfeito"}
@@ -61,11 +63,13 @@ EXPRESSOES_NEGATIVAS = {
     "falta de apoio", "quebrado por dentro", "estou me arrastando", "vontade de chorar"
 }
 
+# Retorna o nome do dia da semana
 def obter_dia_semana():
     dias = ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira",
             "sexta-feira", "sábado", "domingo"]
     return dias[datetime.now().weekday()]
 
+# Verifica o tipo de sentimento das palavras
 def analisar_sentimento_palavras(texto):
     texto_lower = texto.lower()
     score = 0
@@ -91,6 +95,7 @@ def analisar_sentimento_palavras(texto):
     else:
         return 0  # neutro
 
+# Seleciona a frase mais adequada para o sentimento identificado
 def gerar_frase(sentimento, dia_semana, nome_usuario=""):
     if sentimento == "positivo":
         frase = random.choice(frases.frases_positivo)
@@ -108,6 +113,7 @@ def gerar_frase(sentimento, dia_semana, nome_usuario=""):
 
     return frase
 
+# Analisando o sentimento da postagem
 def analisar_postagens(postagens, nome_usuario=""):
     if not postagens:
         return "neutro", "Nenhuma postagem para analisar hoje."
