@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diário Digital Inclusivo - Ajuda</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="{% static 'css/style-index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/acessibilidade.css' %}">
+  <link rel="icon" href="{% static 'images/2_diario.jpg' %}" type="image/x-icon">
+</head>
+<body>
+
+<header role="banner">
+    <nav role="navigation" aria-label="Menu principal">
+        <div class="menu-container">
+            <div class="menu-links">
+                <a href="{% url 'inicio' %}">Início</a>
+                <a href="{% url 'sobre' %}">Sobre</a>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'cadastro' %}">Cadastrar</a>
+            </div>
+            <div class="menu-actions">
+                <a href="#" id="btn-diminuir-fonte" class="btn-acessibilidade" aria-label="Diminuir fonte">A-</a>
+                <a href="#" id="btn-aumentar-fonte" class="btn-acessibilidade" aria-label="Aumentar fonte">A+</a>
+                <a href="#" id="btn-tema" class="btn-acessibilidade" aria-label="Alternar tema claro ou escuro">🌓 <span>Tema Claro / Escuro</span></a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Ajuda e Suporte</h1>
+  </div>
+
+  <section id="faq" class="mb-5">
+  <h2 class="h4">Perguntas Frequentes</h2>
+
+  <div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
+          Como criar uma conta?
+        </button>
+      </h2>
+      <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Digite aqui.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+          Como posso redefinir minha senha?
+        </button>
+      </h2>
+      <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Digite aqui.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+          Há um aplicativo móvel disponível?
+        </button>
+      </h2>
+      <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Digite aqui.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+          Como gerar um relatório?
+        </button>
+      </h2>
+      <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Digite aqui.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section id="tutorial" class="row gy-4">
+  <div class="col-md-6">
+    <h2 class="h4">Primeiros Passos</h2>
+    <div class="ratio ratio-16x9 border rounded overflow-hidden">
+      <iframe 
+        src="https://www.youtube.com/embed/SEU_VIDEO_ID" 
+        title="Tutorial em vídeo" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <h2 class="h4">Suporte e Feedback</h2>
+    <p>Se você precisa de ajuda ou deseja enviar sugestões para melhorar nossa plataforma, estamos aqui para ouvir você.</p>
+    <p>Entre em contato com a nossa equipe pelo e-mail: 
+      <a href="mailto:suporte@diariodigital.com" class="text-success">suporte@diariodigital.com</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="text-center py-4 mt-5 border-top">
+  <small>&copy; 2025 Diário Digital Inclusivo. Todos os direitos reservados.</small>
+</footer>
+
+<script src="{% static 'js/acessibilidade.js' %}"></script>
+
+</body>
+</html>
