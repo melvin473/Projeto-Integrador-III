@@ -1,0 +1,21 @@
+{% for postagem in postagens %}
+  <div class="card shadow-sm mb-4 border-0">
+    <div class="card-body">
+      <h5 class="card-title mb-1">{{ postagem.titulo }}</h5>
+      <small class="text-muted mb-2 d-block">{{ postagem.data|date:"d/m/Y" }}</small>
+      <span class="badge bg-secondary mb-2">
+        {{ postagem.get_emocao_tipo_display }} {{ postagem.get_emoji_display }}
+      </span>
+      <p class="mb-1">
+        <strong>Intensidade:</strong> {{ postagem.intensidade|default:"-" }}/5
+      </p>
+      <a href="{% url 'visualizar_postagem' postagem.id %}" class="btn btn-outline-primary btn-sm mt-2">
+        Ver postagem completa
+      </a>
+    </div>
+  </div>
+{% empty %}
+  <div class="alert alert-info text-center" role="alert">
+    Você ainda não escreveu nenhuma postagem.
+  </div>
+{% endfor %}
