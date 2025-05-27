@@ -1,0 +1,237 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Visualizar relatório</title>
+  <meta name="theme-color" content="#00796b" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style-index.css' %}" />
+  <link rel="icon" href="{% static 'images/2_diario.jpg' %}" type="image/x-icon" />
+  <style>
+  .container-grafico-legenda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* espaçamento entre gráfico e legenda */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    max-height: 300px;
+    max-width: 740px;
+    margin: auto;
+    background: #fafafa;
+  }
+  .legenda-custom {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    min-width: 120px;
+  }
+  .legenda-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .legenda-cor {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  .positivo { background-color: rgba(75, 192, 192, 0.6); border: 1px solid rgba(75, 192, 192, 1); }
+  .negativo { background-color: rgba(255, 99, 132, 0.6); border: 1px solid rgba(255, 99, 132, 1); }
+  .neutro { background-color: rgba(201, 203, 207, 0.6); border: 1px solid rgba(201, 203, 207, 1); }
+</style>
+</head>
+
+<body>
+  <!-- Template Django -->
+  <header role="banner">
+    <nav role="navigation" aria-label="Menu principal">
+      <div class="menu-container">
+        <div class="menu-links">
+          <a href="{% url 'perfil' %}">Perfil</a>
+          <a href="{% url 'perfil_diario' %}">Diário</a>
+          <a href="{% url 'ajuda' %}">Ajuda</a>
+          <a href="#" id="logout-link">Sair</a>
+        </div>
+        <div class="menu-actions">
+          <a href="#" id="btn-diminuir-fonte" class="btn-acessibilidade" aria-label="Diminuir fonte">A-</a>
+          <a href="#" id="btn-aumentar-fonte" class="btn-acessibilidade" aria-label="Aumentar fonte">A+</a>
+          <a href="#" id="btn-tema" class="btn-acessibilidade" aria-label="Alternar tema claro ou escuro">🌓
+            <span>Tema Claro / Escuro</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <button onclick="gerarPDF()" class="btn btn-primary mt-3">📄 Baixar relatório em PDF</button>
+
+<div id="relatorioContent">
+  <main class="container mt-4" style="max-width: 800px; margin: 0 auto; padding: 40px 30px; font-family: Arial, sans-serif; background: #fff; color: #333;">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4" style="border-bottom: 1px solid #ccc; padding-bottom: 20px;">
+      <img src="{% static 'images/1_diario.jpg' %}" alt="Logo do Diário Digital Inclusivo" style="max-height: 40px;" />
+      <h3 style="margin-top: 10px;">DIÁRIO DIGITAL INCLUSIVO</h3>
+      <p style="font-size: 14px;">
+        Uma plataforma para ajudar pessoas autistas a expressar suas emoções de forma transparente e personalizada.
+      </p>
+    </div>
+    <div class="mb-4 pb-2 border-bottom">
+      <h5>Identificação</h5>
+      <ul class="list-unstyled mb-2">
+        <li><strong>Nome:</strong> {{ usuario.nome_completo }}</li>
+        <li><strong>Telefone:</strong> {{ usuario.telefone }}</li>
+        <li><strong>Email:</strong> {{ usuario.email }}</li>
+      </ul>
+      <p class="text-muted mb-0" style="font-size: 0.9rem;">Relatório gerado em: {{ data_atual }}</p>
+    </div>
+
+    <!-- Título -->
+    <h4 style="margin-bottom: 20px; text-align: center;">
+      Relatório emocional - Últimos {{ periodo }} dias
+    </h4>
+
+    <div class="container-grafico-legenda mb-4">
+      <canvas id="graficoSentimentos" ></canvas>
+      <div class="legenda-custom">
+        <div class="legenda-item"><div class="legenda-cor positivo"></div>Positivos</div>
+        <div class="legenda-item"><div class="legenda-cor negativo"></div>Negativos</div>
+        <div class="legenda-item"><div class="legenda-cor neutro"></div>Neutros</div>
+      </div>
+    </div>
+
+    <!-- Análise por dia da semana -->
+    <div style="border: 1px solid #ccc; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
+      <h5 class="mb-3">Postagens por dia da semana</h5>
+      <ul style="list-style: none; padding-left: 0;">
+        {% for dia in analise_por_dia %}
+        <li>
+          <strong>{{ dia.dia|capfirst }}:</strong>
+          {{ dia.total_postagens }} postagens —
+          positivas: {{ dia.positivo }},
+          negativas: {{ dia.negativo }},
+          neutras: {{ dia.neutro }}
+        </li>
+        {% empty %}
+          <li>Nenhuma análise disponível.</li>
+        {% endfor %}
+          </li>
+      </ul>
+    </div>
+
+    <div class="card mt-4 p-3 shadow-sm" style="page-break-before: always;">
+      <h5 class="card-title mb-3">Análise por dia</h5>
+      <ul class="list-group list-group-flush">
+        {% for frase in frases_semana %}
+        <li class="list-group-item">{{ frase }}</li>
+          {% empty %}
+        <li class="list-group-item">Sem informações.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+    <div class="card mt-4 p-3 shadow-sm">
+      <h5 class="card-title mb-3">Comentários adicionais</h5>
+      <textarea class="form-control" rows="3" placeholder="Escreva suas observações..."></textarea>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="text-center mt-4" style="border-top: 1px solid #ccc; padding-top: 15px; font-size: 12px;">
+      &copy; 2025 Diário Digital Inclusivo. Todos os direitos reservados.
+    </div>
+  </main>
+</div>
+  <!-- Formulário de Logout -->
+  <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display: none;">
+    {% csrf_token %}
+  </form>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/acessibilidade.js' %}"></script>
+  
+
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="{% static 'js/acessibilidade.js' %}"></script>
+
+  <!-- Script único para o gráfico -->
+  <script>
+  const dadosGrafico = {{ dados_grafico|safe }};
+
+  const ctx = document.getElementById('graficoSentimentos').getContext('2d');
+
+  const data = {
+    datasets: [{
+      label: 'Sentimentos',
+      data: [dadosGrafico.positivo, dadosGrafico.negativo, dadosGrafico.neutro],
+      backgroundColor: [
+        'rgba(75, 192, 192, 0.6)',  // verde água para positivos
+        'rgba(255, 99, 132, 0.6)',  // vermelho para negativos
+        'rgba(201, 203, 207, 0.6)'  // cinza para neutros
+      ],
+      borderColor: [
+        'rgba(75, 192, 192, 1)',
+        'rgba(255, 99, 132, 1)',
+        'rgba(201, 203, 207, 1)'
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  const config = {
+  type: 'pie',
+  data: data,
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      tooltip: { enabled: true },
+      legend: {
+        position: 'bottom',
+        labels: { font: { size: 14 } }
+      },
+      datalabels: {
+        color: '#000',          // cor do texto
+        font: { weight: 'bold', size: 14 },
+        formatter: (value, context) => {
+          return value;
+        }
+      }
+    }
+  },
+  plugins: [ChartDataLabels],
+};
+
+
+  new Chart(ctx, config);
+
+function gerarPDF() {
+    const element = document.getElementById('relatorioContent');
+
+    const opt = {
+      margin:       0,
+      filename:     'Relatório de emoções.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  {
+        scale: 3,
+        useCORS: true
+      },
+      jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
+</body>
+
+</html>
