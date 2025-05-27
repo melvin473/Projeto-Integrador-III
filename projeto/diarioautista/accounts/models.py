@@ -1,3 +1,4 @@
+# Importação das bibliotecas necessárias
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
@@ -6,11 +7,13 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
+# Verifica o tamanho da imagem antes de salvar
 def validar_tamanho_imagem(imagem):
     limite_mb = 2  # tamanho máximo em megabytes
     if imagem.size > limite_mb * 1024 * 1024:
         raise ValidationError(f'A imagem não pode ter mais que {limite_mb}MB.')
 
+# Modelo de usuário customizado
 class CustomUser(AbstractUser):
     username = None  # Desativa o campo username
     email = models.EmailField(unique=True)
@@ -23,10 +26,7 @@ class CustomUser(AbstractUser):
         validators=[validar_tamanho_imagem]
     )
     bio_perfil = models.CharField(max_length=140, null=True, blank=True, default="Ainda não escreveu uma bio.")
-    registro_profissional = models.CharField(max_length=20, null=True, blank=True, default="Nenhum")
     telefone = models.CharField(max_length=20, null=True, blank=True, default="")
-    especialidade = models.CharField(max_length=50, null=True, blank=True, default="Nenhuma")
-    perfil_verificado = models.BooleanField(default=False)
     criado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)
 
@@ -36,6 +36,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+# Modelo de postagem
 class Postagem(models.Model):
     
     User = get_user_model()
@@ -74,6 +75,7 @@ class Postagem(models.Model):
     criado_em = models.DateTimeField(auto_now_add=True)
     dia_semana = models.CharField(max_length=15, blank=True, editable=False)
 
+    # Salva a postagem
     def save(self, *args, **kwargs):
         # Garante que criado_em esteja definido antes de calcular dia_semana
         if not self.criado_em:
