@@ -1,0 +1,378 @@
+/* Variáveis para tema claro (padrão) */
+:root {
+  --bg-color: #f4f4f4;
+  --container-bg: #ffffff;
+  --text-color: #333;
+  --header-bg: #e0f7fa;
+  --header-border: #b2ebf2;
+  --link-color: #00796b;
+  --button-bg: #00796b;
+  --button-text: #ffffff;
+  --button-hover-bg: #004d40;
+}
+
+/* Tema escuro */
+body.tema-escuro {
+  --bg-color: #121212;
+  --container-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --header-bg: #1f2f2f;
+  --header-border: #80cbc4;
+  --link-color: #80cbc4;
+  --button-bg: #80cbc4;
+  --button-text: #121212;
+  --button-hover-bg: #4db6ac;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+  overflow-x: hidden;
+  font-size: 1rem; /* tamanho padrão */
+}
+
+/* Fonte grande para acessibilidade */
+body.fonte-grande {
+  font-size: 1.2em;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+header {
+  background-color: var(--header-bg);
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 1px solid var(--header-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Menu */
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #e0f2f1; /* tema claro padrão do menu */
+  transition: background-color 0.3s ease;
+}
+
+body.tema-escuro .menu-container {
+  background-color: #1f2f2f; /* escuro no menu */
+}
+
+.menu-links,
+.menu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-links a,
+.menu-actions a {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+body.tema-escuro .menu-links a,
+body.tema-escuro .menu-actions a {
+  color: #ffffff;
+}
+
+.menu-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+body.tema-escuro .menu-actions button {
+  color: #ffffff;
+}
+
+.menu-actions button:hover,
+.menu-links a:hover,
+.menu-actions a:hover {
+  color: var(--button-hover-bg);
+}
+
+/* Links e botões */
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: var(--link-color);
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.home-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Inputs, textarea e selects */
+input,
+textarea,
+select,
+button {
+  background-color: var(--container-bg);
+  color: var(--text-color);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.tema-escuro input,
+body.tema-escuro textarea,
+body.tema-escuro select,
+body.tema-escuro button {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #444;
+}
+
+/* Introdução */
+.intro {
+  text-align: center;
+  padding: 20px;
+}
+
+.intro img {
+  width: 80px;
+  margin-bottom: 10px;
+}
+
+/* Funcionalidades */
+.features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 10px;
+}
+
+.feature-item {
+  margin: 10px;
+  flex: 1 1 200px;
+  max-width: 250px;
+}
+
+.feature-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.feature-link:hover {
+  color: var(--button-bg);
+}
+
+/* Feedback */
+.feedback-area {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.feedback-area input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.feedback-area button {
+  padding: 10px 20px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.feedback-area button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Imagens responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu-links,
+  .menu-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu-links a,
+  .menu-actions a,
+  .menu-actions button {
+    padding: 8px 0;
+    font-size: 1rem;
+  }
+}
+
+.font-size-controls button {
+  font-size: 1rem;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 1px solid var(--link-color);
+  background-color: transparent;
+  color: var(--link-color);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.font-size-controls button:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--button-text);
+}
+
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* permite quebra no mobile */
+    padding: 10px 20px;
+}
+
+.menu-links,
+.menu-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.menu-actions button,
+.menu-actions a {
+    margin: 0; /* remove espaçamentos indesejados */
+}
+
+/* Versão mobile (abaixo de 768px) */
+@media (max-width: 768px) {
+    .menu-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-links,
+    .menu-actions {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .menu-actions button,
+    .menu-actions a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+[data-tema="dark"] .ratio {
+  border: 1px solid #ccc;
+  background-color: #121212;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.perfil-foto,
+.perfil-foto-placeholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ccc;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+[data-tema="dark"] .perfil-foto-placeholder {
+  background-color: #444;
+  color: #eee;
+}
+
+/* Estilo base do botão */
+.home-button {
+  background-color: #ccc;
+  color: #666;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: not-allowed;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Quando o botão está habilitado */
+.home-button:enabled {
+  background-color: #28a745; /* verde Bootstrap */
+  color: white;
+  cursor: pointer;
+}
+
+.home-button:enabled:hover {
+  background-color: #218838; /* verde mais escuro */
+}
+
+.home-button1 {
+    text-decoration: none;
+    background-color: #00796b;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: bold;
+}
