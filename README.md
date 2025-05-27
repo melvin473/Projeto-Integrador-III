@@ -48,5 +48,5 @@ Para a execução em ambiente real (Google Cloud), foi utilizado um **repositór
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/melvin473/Projeto-Integrador-III.git
+cd Projeto-Integrador-III
