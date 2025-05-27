@@ -12,7 +12,7 @@ Este projeto tem como objetivo criar um **diário digital voltado a pessoas auti
 
 ## 👥 Integrantes
 
-Desenvolvido por alunos do curso de Engenharia da Computação da **Universidade Virtual do Estado de São Paulo (UNIVESP)**:
+Desenvolvido por alunos do curso do Eixo Computação da **Universidade Virtual do Estado de São Paulo (UNIVESP)**:
 
 - Flávia Alessandra Furlan  
 - Lígia de Queiroz Lopes  
