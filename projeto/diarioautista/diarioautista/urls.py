@@ -10,7 +10,6 @@ urlpatterns = [
     path('index', views.inicio_view, name='inicio'),  # Rota para a página inicial
     path('ajuda', views.ajuda_view, name='ajuda'),  # Rota para a página de ajuda
     path('sobre', views.sobre_view, name='sobre'),  # Rota para a página Sobre
-    path('service-worker.js', include('accounts.urls'), name='service-worker'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
