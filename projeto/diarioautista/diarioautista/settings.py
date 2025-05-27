@@ -1,3 +1,4 @@
+# Importação das bibliotecas necessárias
 from pathlib import Path
 import os
 from google.oauth2 import service_account
@@ -40,20 +41,19 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 LOGIN_URL = 'accounts/login/'
 LOGIN_REDIRECT_URL = 'accounts/perfil/'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts/login/'
+
+# Arquivos estaticos armazenados em bucket do Google Cloud
 STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/static/'
 
 SITE_ID = 1
 
-SECRET_KEY = 'django-insecure-h^c5tf2z)t9co_3a++&bmn@+k*d@*%(v#_bu&-tt&l#!*k1%w_'
+SECRET_KEY = '*** a chave secreta django vai aqui ***'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://projeto-integrador-iii-d7e19.web.app',
-    'https://projeto-integrador-iii-d7e19.firebaseapp.com',
-    'https://diariodoautista.app',
     'https://diario-virtual-1065315166413.southamerica-east1.run.app',
     'https://127.0.0.1'
 ]
@@ -114,14 +114,15 @@ TEMPLATES = [
     },
 ]
 
+# Banco de dados na nuvem, Google Cloud Postgree SQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'autista-db',
-        'USER': 'app-user',
-        'PASSWORD': 'f}PI;Gp6ngVJ%0mt**',
-        'HOST': '35.198.55.132',
-        'PORT': '5432',
+        'NAME': '*** nome do banco de dados ***',
+        'USER': '*** usuário do banco de dados ***',
+        'PASSWORD': '*** senha do banco de dados ***',
+        'HOST': '*** IP do banco de dados ***',
+        'PORT': '5432', # Porta padrão
         'OPTIONS': {
             'sslmode': 'require',
             'sslcert': str(SSL_CERT_PATH),
