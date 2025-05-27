@@ -1,4 +1,4 @@
-// === CONFIGURAÇÃO INICIAL ===
+// Configuração inicial
 const body = document.body;
 const btnTema = document.getElementById("btn-tema");
 const btnAumentarFonte = document.getElementById("btn-aumentar-fonte");
@@ -10,8 +10,6 @@ const fonteMin = 0.8;
 const fonteMax = 1.6;
 const passoFonte = 0.1;
 
-// === FUNÇÕES ===
-
 // Alterna entre tema claro e escuro
 function alternarTema() {
     body.classList.toggle("tema-escuro");
@@ -19,7 +17,7 @@ function alternarTema() {
     localStorage.setItem("tema", temaAtual);
 }
 
-// Aumenta o tamanho da fonte, até o limite
+// Aumenta o tamanho da fonte
 function aumentarFonte() {
     if (fonteAtual < fonteMax) {
         fonteAtual = parseFloat((fonteAtual + passoFonte).toFixed(1));
@@ -27,7 +25,7 @@ function aumentarFonte() {
     }
 }
 
-// Diminui o tamanho da fonte, até o limite
+// Diminui o tamanho da fonte
 function diminuirFonte() {
     if (fonteAtual > fonteMin) {
         fonteAtual = parseFloat((fonteAtual - passoFonte).toFixed(1));
@@ -59,7 +57,7 @@ function aplicarPreferenciasSalvas() {
     }
 }
 
-// === EVENTOS ===
+// Eventos
 btnTema?.addEventListener("click", alternarTema);
 btnAumentarFonte?.addEventListener("click", aumentarFonte);
 btnDiminuirFonte?.addEventListener("click", diminuirFonte);
