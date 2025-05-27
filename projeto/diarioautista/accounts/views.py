@@ -1,3 +1,4 @@
+# Importando as bibliotecas necessárias
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -17,19 +18,19 @@ from collections import defaultdict, Counter
 from datetime import datetime
 from accounts import analise
 
+# Exibe a Página Inicial
 def inicio_view(request):
     return render(request, 'index.html')
 
+# Exibe a página Ajuda
 def ajuda_view(request):
     return render(request, 'ajuda.html')
 
+# Exibe a página Sobre
 def sobre_view(request):
     return render(request, 'sobre.html')
 
-def service_worker(request):
-    js = render_to_string('service-worker.js')
-    return HttpResponse(js, content_type='application/javascript')
-
+# Exibe a página de login
 def login_view(request):
     if request.method == 'POST':
         # Recebe os dados do formulário
@@ -46,16 +47,18 @@ def login_view(request):
             messages.error(request, 'E-mail ou senha inválidos.')
             return redirect('login')  # Retorna para a página de login
 
-    return render(request, 'login.html')
+    return render(request, 'login.html') # Retorna a página de login
 
-# Página de perfil protegida
+# O decorador "@login_required" só permite executar uma função se o usuário estiver conectado
+
+# Exibe a página de perfil
 @login_required
 def perfil(request):
     return render(request, 'perfil.html', {
         'usuario': request.user  # Passa o usuário logado para a template
     })
 
-
+# Função de cadastro de usuários
 def cadastro_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -67,6 +70,7 @@ def cadastro_view(request):
 
     return render(request, 'cadastro.html', {'form': form})
 
+# Exibição da página do diário
 @login_required
 def diario(request):
     usuario = request.user
@@ -83,17 +87,17 @@ def diario(request):
     else:
         postagens = Postagem.objects.filter(usuario=usuario)
 
-    # extrair textos para análise
+    # Extrai textos para análise de sentimento
     textos = [p.texto for p in postagens]
     analise_hoje = analisar_postagens(textos, nome_usuario=usuario.get_full_name())
 
-    # resto da view...
     return render(request, 'diario.html', {
         'usuario': usuario,
         'postagens': postagens,
         'analise_hoje': analise_hoje
     })
 
+# Realiza uma nova postagem
 @login_required
 def nova_postagem(request):
     if request.method == 'POST':
@@ -113,6 +117,7 @@ def nova_postagem(request):
         form = PostagemForm()
     return render(request, 'nova_postagem.html', {'form': form})
 
+# Editar o perfil
 @login_required
 def perfil_editar(request):
     usuario = request.user
@@ -143,6 +148,7 @@ def perfil_editar(request):
 
     return render(request, 'perfil_editar.html', {'usuario': usuario})
 
+# Exclusão da conta
 @login_required
 def excluir_conta(request):
     if request.method == 'POST':
@@ -158,6 +164,7 @@ def excluir_conta(request):
         return redirect('login')
     return redirect('perfil')
 
+# Visualização completa da postagem
 @login_required
 def visualizar_postagem(request, postagem_id):
     postagem = get_object_or_404(Postagem, id=postagem_id, usuario=request.user)
@@ -165,7 +172,8 @@ def visualizar_postagem(request, postagem_id):
     return render(request, 'visualizar_postagem.html', {
         'postagem': postagem
     })
-    
+
+# Exclusão da postagem
 @login_required
 def excluir_postagem(request, postagem_id):
     postagem = get_object_or_404(Postagem, id=postagem_id, usuario=request.user)
@@ -176,6 +184,8 @@ def excluir_postagem(request, postagem_id):
 
     return redirect('visualizar_postagem', postagem_id=postagem.id)
 
+# Cria o relatório de postagens, com análise de
+# sentimentos das postagens do período selecionado
 def relatorio_analise(request):
     usuario = request.user
     periodo_str = request.GET.get("periodo", "30")
@@ -223,12 +233,12 @@ dias_semana_pt = {
     'sunday': 'domingo'
 }
 
+# Retorna o dia da semana em formato correto
 def nome_dia_semana(dt):
     dia_en = dt.strftime('%A').lower()
     return dias_semana_pt.get(dia_en, dia_en)
 
-# Função principal: gera relatório emocional
-
+# Gera relatório emocional
 def gerar_relatorio_emocional(postagens, nome_usuario=""):
     if not postagens:
         return {
@@ -289,7 +299,8 @@ def gerar_relatorio_emocional(postagens, nome_usuario=""):
         "analise_por_dia": analise_por_dia,
         "frases_semana" : frases_semana
     }
-    
+
+# Geração de frases personalizadas
 def gerar_frases_sentimentos_por_dia(postagens):
     if not postagens:
         return ["Nenhuma frase gerada."]
